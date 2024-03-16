@@ -7,13 +7,19 @@ import org.junit.Test;
 
 public class ProfessorTest {
 
+	Coordenacao coordComputacao;
 	Professor professor01;
 	HorarioProfessor horarioProf01;
 	
 	@Before
-	public void criarObjetos() {
-		professor01 = new Professor("Sabrina", "0202");
-		horarioProf01 = new HorarioProfessor(professor01);
+	public void criarObjetos() throws CoordenacaoException {
+		coordComputacao = ControleAcademico.criarCoordenacao("Computação", "080");
+		
+		coordComputacao.cadastroProfessor("Davis");
+		professor01 = coordComputacao.getProfessores().get(0);
+		
+		coordComputacao.registrarHorarioProfessor(coordComputacao.getProfessores().get(0));
+		horarioProf01 = coordComputacao.getProfessores().get(0).getHorarioProfessor();
 	}
 	
 	@Test

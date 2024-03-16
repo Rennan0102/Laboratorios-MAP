@@ -4,12 +4,12 @@ public class Professor {
 	private String nome, matricula;
 	private HorarioProfessor horarioProfessor;
 
-	public Professor(String nome, String matricula) {
+	protected Professor(String nome, String matricula) {
 		this.nome = nome;
 		this.matricula = matricula;
 	}
 	
-	public void adicionarHorario(HorarioProfessor horarioProfessor) {
+	protected void adicionarHorario(HorarioProfessor horarioProfessor) {
 		this.horarioProfessor = horarioProfessor;
 	}
 	

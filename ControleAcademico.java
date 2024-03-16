@@ -6,6 +6,20 @@ import java.util.ArrayList;
 public class ControleAcademico {
 	private static ArrayList<Turma> turmas = new ArrayList<Turma>();
 	private static ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
+	private static ArrayList<Coordenacao> coordenacoes = new ArrayList<Coordenacao>();
+	
+	public static Coordenacao criarCoordenacao(String nomeDoCurso, String codigoDoCurso) throws CoordenacaoException {
+		Coordenacao newCoordenacao = new Coordenacao(nomeDoCurso, codigoDoCurso);
+		
+		for (Coordenacao coordenacao : coordenacoes) {
+			if (coordenacao.getCodigoDoCurso() == newCoordenacao.getCodigoDoCurso()) {
+				throw new CoordenacaoException();
+			}
+		}
+		
+		coordenacoes.add(newCoordenacao);
+		return newCoordenacao;
+	}
 	
 	public static Disciplina criarDisciplina(String nome, String id) throws DisciplinaException{
 		Disciplina newDisciplina = new Disciplina(nome, id);
@@ -22,7 +36,7 @@ public class ControleAcademico {
 	
 	public static Turma criarTurma(Professor professor, Disciplina disciplina, LocalDateTime horario, int quantidadeMaxima) throws TurmaException {
 		for (Turma turma : turmas) {
-			if (turma.getHorario() == horario) {
+			if (turma.getHorario() == horario && turma.getProfessor() == professor) {
 				throw new TurmaException();
 			}
 		}
@@ -42,6 +56,13 @@ public class ControleAcademico {
 					throw new TurmaException();
 				}
 			}
+			
+			for (int i = 0; i < aluno.getHorarioAluno().getTurmasAluno().size(); i++) { // Verifica se a nova Turma causa choque de horário com as turmas do horário do Aluno
+				if (aluno.getHorarioAluno().getTurmasAluno().get(i).getHorario() == turma.getHorario()) {
+					throw new TurmaException();
+				}
+			}
+			
 			aluno.getHorarioAluno().getTurmasAluno().add(turma);
 			turma.getAlunos().add(aluno);
 		}
@@ -86,6 +107,10 @@ public class ControleAcademico {
 
 	protected static ArrayList<Disciplina> getDisciplinas() {
 		return disciplinas;
+	}
+
+	protected static ArrayList<Coordenacao> getCoordenacoes() {
+		return coordenacoes;
 	}
 
 }

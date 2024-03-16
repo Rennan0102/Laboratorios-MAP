@@ -6,7 +6,7 @@ public class HorarioProfessor {
 	private Professor professor;
 	private ArrayList<Turma> turmasProf;
 	
-	public HorarioProfessor(Professor professor) {
+	protected HorarioProfessor(Professor professor) {
 		this.professor = professor;
 		turmasProf = new ArrayList<Turma>();
 	}
